@@ -1,0 +1,415 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Box model: border-box makes declared widths include padding and borders. */
+
+/* Grid layout: page regions are placed with named template areas. */
+body {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "nav"
+    "hero"
+    "main"
+    "footer";
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto auto 1fr auto;
+  min-height: 100vh;
+}
+
+/* Grid layout: semantic page regions receive their matching areas. */
+header { grid-area: header; }
+.primary-nav { grid-area: nav; }
+.hero-banner { grid-area: hero; }
+main { grid-area: main; }
+footer { grid-area: footer; }
+
+/* Typography: grouped heading family and named scale values. */
+h1,
+h2,
+h3 {
+  color: var(--brand-primary);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+/* Typography: clamp() creates a fluid heading from phone to desktop widths. */
+h1 {
+  font-size: var(--text-h1);
+  letter-spacing: 0.08rem;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+/* Typography: section heading scale and transform. */
+h2 {
+  font-size: var(--text-h2);
+  text-transform: uppercase;
+}
+
+/* Typography: card and subsection heading scale. */
+h3 { font-size: var(--text-h3); }
+
+/* Typography: paragraphs have a readable line length and inherited rhythm. */
+p {
+  color: var(--muted-text);
+  line-height: 1.5;
+  max-width: 65ch;
+}
+
+/* Typography: the small element completes the type scale. */
+small { font-size: var(--text-small); }
+
+/* Cascade conflict: .intro (0, 1, 0) wins over p (0, 0, 1) by specificity. */
+.intro { color: var(--brand-primary); }
+
+/* Box model: centre the page container with min(), a width cap, and auto margins. */
+main {
+  margin: 0 auto;
+  padding: 1.5rem 0;
+  width: min(90%, 60rem);
+}
+
+/* Child combinator: only direct sections of main receive this four-value margin. */
+main > section {
+  margin: 1.5rem 0 1.5rem 0;
+}
+
+/* Component: section card padding, border, and radius demonstrate the box model. */
+.events,
+.form-section,
+.info-section {
+  background-color: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+}
+
+/* Adjacent sibling: only the first paragraph immediately after an h2 is styled. */
+h2 + p {
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* General sibling: each paragraph after an h2 in the same parent gets spacing. */
+h2 ~ p { margin-bottom: 0.75rem; }
+
+/* Responsive grid: cards reflow automatically with auto-fit, minmax(), fr, and gap. */
+.event-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  margin-top: 1rem;
+}
+
+/* Card component: every event has padding, a hairline border, radius, shadow, and margin. */
+article {
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px var(--shadow-soft);
+  margin: 0.125rem;
+  padding: 1rem;
+}
+
+/* Responsive navigation: calc() keeps the nav inset from the viewport edges. */
+.primary-nav {
+  margin: 0 auto;
+  padding: 0.75rem 0;
+  width: calc(100% - 2rem);
+}
+
+/* Navigation: the full link row is hidden on phones; display:none removes its layout space. */
+.nav-links {
+  display: none;
+  list-style: none;
+  text-align: center;
+}
+
+/* Navigation: the visible mobile menu button is styled now; behaviour comes later. */
+.nav-toggle {
+  display: inline-flex;
+  font-size: var(--text-body);
+}
+
+/* Descendant selector: styles links anywhere inside either navigation region. */
+nav a {
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+/* Child combinator: targets the link-list container directly inside the primary nav. */
+.primary-nav > .nav-links {
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+/* :not() and :last-child: divide footer links except for the final link. */
+footer nav > a:not(:last-child) {
+  border-right: 1px solid var(--border-color);
+  margin-right: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Link state, LVHA order: unvisited links. */
+a:link { color: var(--brand-primary); }
+
+/* Link state, LVHA order: visited links. */
+a:visited { color: var(--link-visited); }
+
+/* Link state, LVHA order: hover feedback. */
+a:hover {
+  color: var(--brand-accent);
+  text-decoration: underline;
+}
+
+/* Focus state: a visible outline supports keyboard navigation. */
+a:focus {
+  outline: 0.1875rem solid var(--focus-ring);
+  outline-offset: 0.1875rem;
+}
+
+/* Link state, LVHA order: active links. */
+a:active { color: var(--link-active); }
+
+/* Attribute selector and generated content: marks external HTTPS links. */
+a[href^="https"]::after {
+  content: " (external)";
+  font-size: 0.9em;
+}
+
+/* Image display: a uniform cover crop keeps the banner responsive. */
+.hero-banner {
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  width: min(90%, 60rem);
+}
+
+/* Generated content: labels the figure without adding non-semantic markup. */
+.hero-banner::before {
+  background-color: var(--surface);
+  color: var(--brand-accent);
+  content: "Featured campus board";
+  font-weight: bold;
+  left: 1rem;
+  padding: 0.25rem 0.5rem;
+  position: absolute;
+  top: 1rem;
+  z-index: 1;
+}
+
+/* Responsive image: max-width and object-fit retain a consistent banner shape. */
+img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+.hero-banner img {
+  height: clamp(12rem, 32vw, 20rem);
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Semi-transparent overlay: improves caption contrast on the banner. */
+figcaption {
+  background-color: var(--banner-overlay);
+  bottom: 0;
+  color: var(--on-brand);
+  padding: 0.5rem 1rem;
+  position: absolute;
+  width: 100%;
+}
+
+/* Component: decorative background image is controlled by relative size and position. */
+.form-section {
+  background-image: url("icon.png");
+  background-position: right 1rem bottom 1rem;
+  background-repeat: no-repeat;
+  background-size: 4rem;
+}
+
+/* Component: spacing makes individual form controls easy to scan. */
+form p { margin: 0.75rem 0; }
+
+/* Component: labels are explicitly associated with their form fields in HTML. */
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+/* Form styling: common control padding and a hairline border. */
+input:not(.theme-input),
+textarea {
+  background-color: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  color: unset;
+  padding: 0.6rem 0.75rem;
+  width: 100%;
+}
+
+/* Attribute selectors: typed email and date fields receive a subtle tint. */
+input[type="email"],
+input[type="date"] { background-color: var(--input-tint); }
+
+/* Pseudo-element: placeholder text is distinct from entered content. */
+input::placeholder,
+textarea::placeholder {
+  color: var(--placeholder-color);
+  font-style: italic;
+}
+
+/* Focus state: controls show the keyboard focus location. */
+input:not(.theme-input):focus,
+textarea:focus,
+button:focus {
+  border-color: var(--focus-ring);
+  outline: 0.1875rem solid var(--focus-ring);
+  outline-offset: 0.125rem;
+}
+
+/* Inheritance: buttons deliberately receive the page font. */
+button {
+  background-color: var(--brand-primary);
+  border: 1px solid var(--brand-primary);
+  border-radius: 0.25rem;
+  color: var(--on-brand);
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0.75rem 1.5rem;
+}
+
+/* Initial value: reset default details margin before adding intentional spacing. */
+details { margin: initial; }
+
+/* Component: FAQ controls have intentional spacing after their initial reset. */
+details + details { margin-top: 0.75rem; }
+
+/* Table component: border-collapse belongs on the table itself. */
+table { border-collapse: collapse; }
+
+/* Table component: grouped selector draws a consistent grid. */
+table,
+th,
+td { border: 1px solid var(--border-color); }
+
+/* Positional selector: stripe alternating table rows for readability. */
+tbody tr:nth-child(even) { background-color: var(--table-stripe); }
+
+/* Component: table cell spacing uses a two-value padding shorthand. */
+th,
+td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+/* Component: footer separates supporting contact information from main content. */
+footer {
+  background-color: var(--surface);
+  border-top: 1px solid var(--border-color);
+  padding: 1rem 5%;
+}
+
+/* Skip link: hidden above the viewport until it receives keyboard focus. */
+.skip {
+  background-color: var(--text-color);
+  color: var(--on-brand);
+  left: 1rem;
+  padding: 0.5rem 0.75rem;
+  position: absolute;
+  top: -4rem;
+}
+
+/* Skip link focus: moves the link into view for keyboard users. */
+.skip:focus { top: 1rem; }
+
+/* No-JavaScript theme control: the native checkbox is visually replaced by its label. */
+.theme-input {
+  height: 1px;
+  opacity: 0;
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  width: 1px;
+}
+
+/* Theme control: the label is styled as a fixed top-right button. */
+.theme-toggle {
+  align-items: center;
+  background-color: var(--brand-primary);
+  border: 1px solid var(--surface);
+  border-radius: 99rem;
+  color: var(--on-brand);
+  cursor: pointer;
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.6rem 1rem;
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  z-index: 1;
+}
+
+/* Generated content: identifies the unchecked light-theme state. */
+.theme-toggle::before { content: "Light:"; }
+
+/* Focus state: keyboard users see the hidden checkbox's associated control. */
+.theme-input:focus + .theme-toggle {
+  outline: 0.1875rem solid var(--focus-ring);
+  outline-offset: 0.1875rem;
+}
+
+/* State selector: confirms visually that the checkbox is checked. */
+.theme-input:checked + .theme-toggle { background-color: var(--brand-accent); }
+
+/* Generated content: the checked state identifies the dark-theme state. */
+.theme-input:checked + .theme-toggle::before { content: "Dark:"; }
+
+/* Mobile-first breakpoint: reveal the full navigation row on wider screens. */
+@media (min-width: 40rem) {
+  .nav-links { display: flex; }
+  .nav-toggle { display: none; }
+  main {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .events { grid-column: 1 / -1; }
+}
+
+/* Wide breakpoint: main becomes an event area with a smaller information sidebar. */
+@media (min-width: 64rem) {
+  body {
+    grid-template-areas:
+      ". header ."
+      ". nav ."
+      ". hero ."
+      ". main ."
+      "footer footer footer";
+    grid-template-columns: minmax(1rem, 1fr) minmax(0, 60rem) minmax(1rem, 1fr);
+  }
+  main {
+    grid-template-areas:
+      "events events"
+      "form info";
+    grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+    width: 100%;
+  }
+  .events { grid-area: events; }
+  .form-section { grid-area: form; }
+  .info-section { grid-area: info; }
+}
+
+footer{
+  text-align: center;
+}
+#copy_Footer{
+text-align: right;
+
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IIITV Campus Event Board</title>
+  <meta name="description" content="Discover, participate in, and celebrate upcoming IIIT Vadodara campus events, workshops, and sports activities.">
+  <link rel="icon" href="icon.png">
+  <meta property="og:title" content="IIITV Campus Event Board">
+  <meta property="og:description" content="Discover, participate in, and celebrate upcoming IIITV campus events.">
+  <meta property="og:image" content="banner.jpg">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme-dark.css">
+</head>
+<body>
+  <a href="#main" class="skip">Skip to content</a>
+  <input class="theme-input" id="theme-toggle" type="checkbox">
+  <label class="theme-toggle" for="theme-toggle">Switch theme</label>
+
+  <!-- header -->
+  <header id="site-header">
+    <h1>Campus Event Board</h1>
+  </header>
+
+  <!-- main navigation -->
+  <nav class="primary-nav">
+    <button class="nav-toggle" type="button">Menu</button>
+    <ul class="nav-links">
+      <li><a class="active" href="#events">Events  | </a></li>
+      <li><a href="#add-event"> Add an Event | </a></li>
+      <li><a href="#info"> Info</a></li>
+    </ul>
+  </nav>
+
+  <!-- hero image -->
+  <figure class="hero-banner">
+    <img src="banner.jpg" alt="Students gathering beneath the IIITV Campus Event Board banner" width="480" height="170">
+    <figcaption>Discover, participate, and celebrate campus life at IIITV.</figcaption>
+  </figure>
+  
+  <!-- main content -->
+  <main id="main"> 
+    <!-- events section -->
+    <section id="events" class="events">
+      <h2>Upcoming Events</h2>
+      <p class="intro"><span lang="hi">नमस्ते</span> (Welcome) to the Campus Event Board. Check this page for upcoming campus activities and events.</p>
+      <p>Registration is open until two days before each event, unless the event details say otherwise.</p>
+
+      <!-- Layout-only wrapper: groups the event cards; no semantic element fits this grid purpose. -->
+      <div class="event-grid">
+        <article>
+        <h3>Orientation Day</h3>
+        <p>Time: <time datetime="08:00">8:00 AM</time> | Date: <time datetime="2026-08-25">25 August 2026</time></p>
+        <p>Please bring your <mark>admission letter</mark> to the venue for quick verification.</p>
+        </article>
+      
+        <article>
+        <h3>Technical Workshop</h3>
+        <p>Date: <del><time datetime="2026-08-28">28 August 2026</time></del> <ins><time datetime="2026-08-29">29 August 2026</time></ins> (updated)</p>
+        </article>
+
+        <article>
+        <h3>Sports Day</h3>
+        <p>Date: <time datetime="2026-08-30">30 August 2026</time></p>
+        </article>
+
+        <article>
+        <h3>Freshers Party</h3>
+        <p>Date: <time datetime="2026-09-06">6 September 2026</time></p>
+        </article>
+
+        <article>
+        <h3><s>Guest Lecture on AI</s> (cancelled)</h3>
+        <p>This event has been called off due to scheduling conflicts.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- add event form section -->
+    <section id="add-event" class="form-section">
+      <h2>Submit an Event</h2>
+      <form action="#" method="post">
+        <p>
+          <label for="event-name">Event name</label>
+          <input id="event-name" name="event-name" type="text" placeholder="e.g. Coding Club Meetup" required>
+        </p>
+        <p>
+          <label for="event-date">Event date</label>
+          <input id="event-date" name="event-date" type="date" required>
+        </p>
+        <p>
+          <label for="contact-email">Contact email</label>
+          <input id="contact-email" name="contact-email" type="email" placeholder="student@iiitvadodara.ac.in" required>
+        </p>
+        <p>
+          <label for="event-description">Event description</label>
+          <textarea id="event-description" name="event-description" placeholder="Tell students what to expect" required></textarea>
+        </p>
+        <p>
+          <label for="event-location">Event location</label>
+          <input id="event-location" name="event-location" type="text" placeholder="e.g. Lecture Hall 1" required>
+        </p>
+        <p>
+          <button type="submit">Add Event</button>
+        </p>
+      </form>
+    </section>
+
+  <!-- information section -->
+    <section id="info" class="info-section">
+      <h2>Event Information</h2>
+      <aside>
+        <table>
+          <caption>Event Categories and Meeting Days</caption>
+          <thead>
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Meeting Day</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Academic</td>
+              <td>Monday</td>
+            </tr>
+            <tr>
+              <td>Sports</td>
+              <td>Wednesday</td>
+            </tr>
+            <tr>
+              <td>Cultural</td>
+              <td>Friday</td>
+            </tr>
+          </tbody>
+        </table>
+      </aside>
+      
+      <h3>Contact us</h3>
+      <p>Email the <a href="mailto:administration@iiitvadodara.ac.in">event coordinator</a> or visit the <a href="https://iiitvadodara.ac.in/" rel="external">IIIT Vadodara website</a>.</p>
+
+      <!-- faq sub-section -->
+      <section id="faq">
+        <h3>Frequently Asked Questions</h3>
+        <details>
+          <summary>Who is allowed to attend these events?</summary>
+          <p>All currently enrolled students, faculty, and staff are welcome. Some specific events may be restricted to first-year students or specific academic departments.</p>
+        </details>
+
+        <details>
+          <summary>Do I need to register for events separately?</summary>
+          <p>Most cultural and sports events allow walk-ins. Technical workshops usually require prior registration through the student portal because seating is limited. Press <kbd>Tab</kbd> to move through this page using only the keyboard.</p>
+        </details>
+      </section>
+    </section>
+  </main>
+
+  <!-- footer section -->
+  <footer class="footer">
+    <nav>
+      <a class="active" href="#events">Events</a>
+      <a href="#add-event">Add an Event</a>
+      <a href="#info">Info</a>
+    </nav>
+    <br>
+    <address>
+      <strong>Contact the Event Coordinator:</strong><br>
+      Dr. Pramit Mazumdar<br>
+      <a href="mailto:administration@iiitvadodara.ac.in">administration@iiitvadodara.ac.in</a><br>
+      <abbr title="Indian Institute of Information Technology Vadodara">IIITV</abbr> Administration
+     <div id="C">
+      <p id="copy_Footer">&copy; All rights reserved.</p>
+    </div></address>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,27 @@
+/* Dark palette: raw colour values remain in variables, not component rules. */
+:root {
+  --dark-brand-primary: hsl(207 100% 77%);
+  --dark-brand-accent: hsl(160 53% 66%);
+  --dark-page-background: #111827;
+  --dark-surface: #1f2937;
+  --dark-text-color: #f3f4f6;
+  --dark-muted-text: #d1d5db;
+  --dark-border-color: #4b5563;
+  --dark-focus-ring: #fbbf24;
+  --dark-table-stripe: hsl(214 31% 22%);
+  --dark-input-tint: rgb(38 58 76);
+}
+
+/* No-JavaScript dark theme: :has() swaps the named design tokens when checked. */
+body:has(#theme-toggle:checked) {
+  --brand-primary: var(--dark-brand-primary);
+  --brand-accent: var(--dark-brand-accent);
+  --page-background: var(--dark-page-background);
+  --surface: var(--dark-surface);
+  --text-color: var(--dark-text-color);
+  --muted-text: var(--dark-muted-text);
+  --border-color: var(--dark-border-color);
+  --focus-ring: var(--dark-focus-ring);
+  --table-stripe: var(--dark-table-stripe);
+  --input-tint: var(--dark-input-tint);
+}
