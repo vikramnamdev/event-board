@@ -195,7 +195,8 @@ a[href^="https"]::after {
   color: var(--brand-accent);
   content: "Featured campus board";
   font-weight: bold;
-  left: 1rem;
+  font-size: 12px;
+  right: 1rem;
   padding: 0.25rem 0.5rem;
   position: absolute;
   top: 1rem;
@@ -219,10 +220,12 @@ img {
 figcaption {
   background-color: var(--banner-overlay);
   bottom: 0;
+  left: 0;
   color: var(--on-brand);
   padding: 0.5rem 1rem;
   position: absolute;
   width: 100%;
+  opacity: 99%;
 }
 
 /* Component: decorative background image is controlled by relative size and position. */
@@ -344,20 +347,20 @@ footer {
   align-items: center;
   background-color: var(--brand-primary);
   border: 1px solid var(--surface);
-  border-radius: 99rem;
+  border-radius: 9rem;
   color: var(--on-brand);
   cursor: pointer;
   display: inline-flex;
   gap: 0.25rem;
-  padding: 0.6rem 1rem;
+  padding: 0.2rem 0.75rem;
   position: fixed;
   right: 1rem;
-  top: 1rem;
+  top: 5rem;
   z-index: 1;
 }
 
 /* Generated content: identifies the unchecked light-theme state. */
-.theme-toggle::before { content: "Light:"; }
+.theme-toggle::before { content: "Dark-Mode"; }
 
 /* Focus state: keyboard users see the hidden checkbox's associated control. */
 .theme-input:focus + .theme-toggle {
@@ -369,7 +372,7 @@ footer {
 .theme-input:checked + .theme-toggle { background-color: var(--brand-accent); }
 
 /* Generated content: the checked state identifies the dark-theme state. */
-.theme-input:checked + .theme-toggle::before { content: "Dark:"; }
+.theme-input:checked + .theme-toggle::before { content: "Light-Mode"; }
 
 /* Mobile-first breakpoint: reveal the full navigation row on wider screens. */
 @media (min-width: 40rem) {
