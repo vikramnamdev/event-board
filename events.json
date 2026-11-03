@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "Coding Competition",
+    "date": "2026-11-15",
+    "seats": 3,
+    "online": false,
+    "description": "A campus coding contest with individual problem-solving rounds.",
+    "location": "Computer Lab 1",
+    "free": true
+  },
+  {
+    "id": 2,
+    "title": "Web Development Workshop",
+    "date": "2026-11-20",
+    "seats": 12,
+    "online": true,
+    "description": "Learn the basics of building responsive websites.",
+    "location": "Online",
+    "free": true
+  },
+  {
+    "id": 3,
+    "title": "Sports Day",
+    "date": "2026-11-24",
+    "seats": 0,
+    "online": false,
+    "description": "A day of outdoor games and friendly campus competitions.",
+    "location": "Sports Ground",
+    "free": false
+  },
+  {
+    "id": 4,
+    "title": "Freshers Meet",
+    "date": "2026-11-28",
+    "seats": 4,
+    "online": false,
+    "description": "Meet classmates, seniors and faculty members.",
+    "location": "Seminar Hall",
+    "free": true
+  }
+]
