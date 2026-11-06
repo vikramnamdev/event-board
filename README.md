@@ -1,158 +1,106 @@
 # IIITV Campus Event Board
 
-## About the Project
+A simple campus event management website developed as part of **CS445 – Basics of Web Programming, Lab Assignment 6**.
 
-The **IIITV Campus Event Board** is a responsive website designed to display upcoming campus events and activities at IIIT Vadodara.
-
-The website allows students to:
-
-- View upcoming campus events
-    
-- See event dates and important information
-    
-- Submit a new event through a form
-    
-- View event categories and meeting days
-    
-- Read frequently asked questions
-    
-- Access the IIIT Vadodara website
-    
-- Switch between light and dark themes
-    
-- Use the website on mobile, tablet, and desktop screens
-    
+The website allows students to explore upcoming campus events, search for specific events, check seat availability and submit new events.
 
 ## Features
 
-- Responsive mobile-first layout
-    
-- Responsive navigation
-    
-- Event cards using CSS Grid
-    
-- Responsive images
-    
-- Fluid typography using `clamp()`
-    
-- CSS variables for the design system
-    
-- Light and dark theme support
-    
-- Accessible form labels and keyboard navigation
-    
-- Semantic HTML elements
-    
-- Event information table
-    
-- FAQ section using `<details>` and `<summary>`
-    
+* **Dynamic Event Loading:** Event information is loaded from `events.json` using the Fetch API.
+* **Event Cards:** JavaScript dynamically creates event cards using DOM manipulation.
+* **Search Events:** Search events by title, date, location or description.
+* **RSVP Functionality:** Students can reserve available seats. The event status changes to Full when no seats remain.
+* **Navigation Menu:** Toggle the navigation menu using the Menu button.
+* **Event Submission:** Users can submit new events through the form.
+* **Form Validation:** HTML and JavaScript validation checks required fields, email format and event name.
+* **Responsive Design:** The website uses CSS for layout and styling.
 
 ## Technologies Used
 
-- HTML5
-    
-- CSS3
-    
-- CSS Grid
-    
-- Flexbox
-    
-- Responsive Media Queries
-    
-- CSS Custom Properties
-    
-- Git and GitHub
-    
+* HTML5
+* CSS3
+* JavaScript
+* JSON
+* Fetch API
+* DOM Manipulation
+* Visual Studio Code
+* Live Server
 
-## Project Files
+## Project Structure
 
 ```text
 event-board/
 │
-├── index.html
+├── Index.html
 ├── style.css
 ├── base.css
 ├── theme-dark.css
+├── script.js
+├── events.json
 ├── banner.jpg
 ├── icon.png
-├── NOTES.pdf
 └── README.md
 ```
 
-## How to Run
+## How to Run the Project
 
-No server or additional software is required.
+1. Clone or download this repository.
+2. Open the project folder in Visual Studio Code.
+3. Install the Live Server extension if it is not already installed.
+4. Open `Index.html`.
+5. Right-click and select **Open with Live Server**.
+6. The Campus Event Board will open in your browser.
 
-1. Download or clone this repository.
-    
-2. Keep all CSS and image files in the same project folder as `index.html`.
-    
-3. Open `index.html` in a web browser.
-    
+**Note:** Run the project using a local web server because the Fetch API is used to load `events.json`.
 
-The website can also be hosted using GitHub Pages.
+## Event Data Format
 
-## Responsive Design
+Events are stored in `events.json`.
 
-The website follows a mobile-first approach.
+Each event contains the following properties:
 
-The base layout is designed for small screens. Larger layouts are added using media queries at approximately:
+| Property    | Description                           |
+| ----------- | ------------------------------------- |
+| id          | Unique event ID                       |
+| title       | Event name                            |
+| date        | Event date in ISO format              |
+| seats       | Available seats                       |
+| online      | Indicates whether the event is online |
+| description | Event description                     |
+| location    | Event location                        |
 
-- `40rem` for the two-column layout
-    
-- `64rem` for the wider layout with an information sidebar
-    
+## JavaScript Concepts Implemented
 
-The event cards use CSS Grid with:
+* `const` and `let`
+* Data types and conditional statements
+* Functions and return values
+* Arrow functions
+* Array methods such as `filter()` and `find()`
+* Loops
+* DOM selection and manipulation
+* Event listeners and event bubbling
+* Event delegation
+* Form validation
+* Fetch API with async/await
+* Error handling using try/catch
 
-```css
-grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-```
+## Team Members
 
-This allows the cards to automatically reflow according to the available screen width.
+| S. No. | Name              | Roll Number |
+| ------ | ----------------- | ----------- |
+| 1      | Vikram Namdev     | 20261651096 |
+| 2      | Pradeep Kumar     | 20261651062 |
+| 3      | Anmol Rajput      | 20261651016 |
+| 4      | Arun Singh        | 20261651024 |
+| 5      | Yogesh Srivastava | 20261651100 |
 
-## Accessibility
+## Project Links
 
-The project includes several accessibility features, including:
+* **GitHub Repository:** https://github.com/vikramnamdev/event-board
+* **Live Website:** https://vikramnamdev.github.io/event-board/
 
-- Skip-to-content link
-    
-- Semantic HTML elements
-    
-- Labels associated with form controls
-    
-- Keyboard focus styles
-    
-- Alternative text for images
-    
-- Keyboard navigation support
-    
-- Accessible table headings
-    
+## Academic Information
 
-## Repository
-
-GitHub Repository:
-
-`https://github.com/vikramnamdev/event-board`
-
-GitHub Pages:
-
-`https://vikramnamdev.github.io/event-board/`
-
-## Authors
-
-Developed as part of the web development laboratory coursework at **Indian Institute of Information Technology Vadodara (IIITV)**.
-
-**Team Members:**
-
-- Name: Vikram Namdev | Roll No.: 20261651096
-	
-- Name: Pradeep Kumar | Roll No.: 20261651062
-    
-- Name: Anmol Rajput  | Roll No.: 20261651016
-    
-- Name: Arun Singh | Roll No.: 20261651024
-	
-- Name: Yogesh Srivastava | Roll No.: 20261651100
+**Course:** CS445 – Basics of Web Programming
+**Assignment:** Lab Assignment 6
+**Project:** IIITV Campus Event Board
