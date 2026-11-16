@@ -44,17 +44,22 @@
     <!-- events section -->
     <section id="events" class="events">
       <h2>Upcoming Events</h2>
-      <div class="search-container">
-    <label for="event-search">Search Events:</label>
+      <p class="intro">
+    <span lang="hi">नमस्ते</span> (Welcome) to the Campus Event Board.
+    Check this page for upcoming campus activities and events.
+</p>
+
+<p>Registration is open until two days before each event, unless the event details say otherwise.</p>
+
+<div class="search-container">
+    <label for="event-search">Search events</label>
     <input
         type="search"
         id="event-search"
-        placeholder="Search events by name...">
-      </div>
+        placeholder="Search by event name, date, or location...">
+</div>
 
 <p id="events-status" aria-live="polite">Loading events...</p>
-      <p class="intro"><span lang="hi">नमस्ते</span> (Welcome) to the Campus Event Board. Check this page for upcoming campus activities and events.</p>
-      <p>Registration is open until two days before each event, unless the event details say otherwise.</p>
 
       <!-- Layout-only wrapper: groups the event cards; no semantic element fits this grid purpose. -->
       <div class="event-grid">
