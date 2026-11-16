@@ -1,76 +1,52 @@
-// A2: const is used by default. let is used only for values that change.
-const pageTitle = "IIITV Campus Event Board"; // string
-const defaultSeatLimit = 30; // number
-const isEventBoardOnline = true; // boolean
 
-// B1: Select elements using querySelector, querySelectorAll and getElementById.
-const eventGrid = document.querySelector(".event-grid");
-const searchInput = document.querySelector("#event-search");
-const eventForm = document.getElementById("event-form");
-const eventsStatus = document.querySelector("#events-status");
-const formStatus = document.querySelector("#form-status");
-const menuButton = document.querySelector(".nav-toggle");
-const navLinks = document.querySelector(".nav-links");
+// Campus Event Board: Assignment 6 + Assignment 7
 
-// A3: This array is filled with event objects received from events.json.
-// let is appropriate because the array is assigned after fetch completes.
+const $ = (selector) => document.querySelector(selector);
+
+const eventGrid = $(".event-grid");
+const searchInput = $("#event-search");
+const eventForm = $("#event-form");
+const eventsStatus = $("#events-status");
+const formStatus = $("#form-status");
+const menuButton = $(".nav-toggle");
+const navLinks = $(".nav-links");
+const eventNameInput = $("#event-name");
+
+const pageTitle = "IIITV Campus Event Board";
+const defaultSeatLimit = 30;
 let events = [];
 
-// A4 + A6: Return one readable status label for an event.
-function getSeatStatus(ev) {
-    if (ev.seats === 0) {
-        return "Full";
-    } else if (ev.seats < 5) {
-        return "Few left";
-    } else {
-        return "Open";
-    }
-}
-
-// A6: A function with a parameter and a return value.
-function formatEvent(ev) {
-    return `${ev.title} | ${formatDate(ev.date)} | ${getSeatStatus(ev)}`;
-}
-
-// Helper function: format an ISO date for display.
-function formatDate(dateValue) {
-    const date = new Date(`${dateValue}T00:00:00`);
-    return date.toLocaleDateString("en-IN", {
+function formatDate(value) {
+    return new Date(`${value}T00:00:00`).toLocaleDateString("en-IN", {
         day: "numeric",
         month: "long",
         year: "numeric"
     });
 }
 
-// A8: count is local to this function and cannot be accessed outside it.
-function getEventCountLabel(list) {
-    const count = list.length;
-    return `${count} event${count === 1 ? "" : "s"} found`;
+function seatStatus(event) {
+    return event.seats === 0
+        ? "Full"
+        : event.seats < 5
+            ? "Few left"
+            : "Open";
 }
 
-// A5: Use a for...of loop to process every event object.
-function logEventSummary() {
-    for (const ev of events) {
-        console.log(formatEvent(ev));
-    }
-}
-
-// B2 + B3: Create event cards from the data instead of hard-coding them in HTML.
 function renderEvents(list) {
     eventGrid.textContent = "";
 
-    if (list.length === 0) {
-        const emptyMessage = document.createElement("p");
-        emptyMessage.textContent = "No events match your search.";
-        emptyMessage.classList.add("empty-message");
-        eventGrid.appendChild(emptyMessage);
+    if (!list.length) {
+        const message = document.createElement("p");
+        message.className = "empty-message";
+        message.textContent = "No events match your search.";
+        eventGrid.appendChild(message);
         return;
     }
 
-    for (const ev of list) {
+    list.forEach((ev) => {
         const card = document.createElement("article");
-        card.classList.add("event-card");
-        card.setAttribute("data-event-id", String(ev.id));
+        card.className = "event-card";
+        card.dataset.eventId = ev.id;
 
         const heading = document.createElement("h3");
         heading.textContent = ev.title;
@@ -85,169 +61,218 @@ function renderEvents(list) {
         location.textContent = `Location: ${ev.location}`;
 
         const mode = document.createElement("span");
-        mode.classList.add("event-mode");
+        mode.className = "event-mode";
         mode.textContent = ev.online ? "Online event" : "On campus";
         mode.classList.toggle("is-online", ev.online);
 
         const seats = document.createElement("p");
-        seats.classList.add("seat-status");
-        seats.textContent = `Seats: ${ev.seats} | Status: ${getSeatStatus(ev)}`;
+        seats.className = "seat-status";
+        seats.textContent = `Seats: ${ev.seats} | Status: ${seatStatus(ev)}`;
 
-        const rsvpButton = document.createElement("button");
-        rsvpButton.type = "button";
-        rsvpButton.textContent = ev.seats === 0 ? "Full" : "RSVP";
-        rsvpButton.setAttribute("data-action", "rsvp");
-        rsvpButton.disabled = ev.seats === 0;
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.action = "rsvp";
+        button.textContent = ev.seats === 0 ? "Full" : "RSVP";
+        button.disabled = ev.seats === 0;
 
-        if (ev.seats === 0) {
-            card.classList.add("full");
-        }
+        if (ev.seats === 0) card.classList.add("full");
 
-        card.appendChild(heading);
-        card.appendChild(date);
-        card.appendChild(description);
-        card.appendChild(location);
-        card.appendChild(mode);
-        card.appendChild(seats);
-        card.appendChild(rsvpButton);
+        card.append(
+            heading, date, description, location, mode, seats, button
+        );
+
         eventGrid.appendChild(card);
-    }
+    });
 
-    // B1: querySelectorAll selects all generated event cards.
-    const cards = document.querySelectorAll(".event-card");
-    console.log(`Rendered ${cards.length} event cards.`);
+    console.log(
+        `Rendered ${document.querySelectorAll(".event-card").length} event cards.`
+    );
 }
 
-// A7 + B6: Arrow function with filter() searches as the user types.
-const filterEvents = (searchText) => {
-    const searchTerm = searchText.trim().toLowerCase();
-    const filteredEvents = events.filter((ev) =>
+function filterEvents(value = "") {
+    const term = value.trim().toLowerCase();
+
+    const filtered = events.filter((ev) =>
         `${ev.title} ${ev.date} ${ev.location} ${ev.description}`
             .toLowerCase()
-            .includes(searchTerm)
+            .includes(term)
     );
 
-    renderEvents(filteredEvents);
-    eventsStatus.textContent = getEventCountLabel(filteredEvents);
-};
+    renderEvents(filtered);
 
-// B4: Hamburger button toggles the navigation list.
-menuButton.addEventListener("click", () => {
-    navLinks.classList.toggle("nav-open");
-    const isOpen = navLinks.classList.contains("nav-open");
-    menuButton.setAttribute("aria-expanded", String(isOpen));
-});
+    eventsStatus.textContent =
+        `${filtered.length} event${filtered.length === 1 ? "" : "s"} found`;
+}
+// Assignment 7 B4-B5: Read XML and compare file sizes.
+async function loadXmlDetails(jsonSize) {
+    try {
+        const response = await fetch("./events.xml");
+        if (!response.ok) throw new Error("Could not load XML.");
 
-// B5: Event delegation uses event.target to identify the clicked RSVP button.
-// The click bubbles from the button to the event-grid container.
-eventGrid.addEventListener("click", (event) => {
-    const clickedButton = event.target.closest('[data-action="rsvp"]');
+        const xmlText = await response.text();
+        const xml = new DOMParser().parseFromString(xmlText, "application/xml");
 
-    if (!clickedButton || !eventGrid.contains(clickedButton)) {
-        return;
+        if (xml.querySelector("parsererror")) {
+            throw new Error("Invalid XML file.");
+        }
+
+        const firstTitle = xml.querySelector("title")?.textContent;
+        const xmlSize = new Blob([xmlText]).size;
+
+        console.log("First XML event title:", firstTitle);
+        console.log("JSON size:", jsonSize, "bytes");
+        console.log("XML size:", xmlSize, "bytes");
+
+    } catch (error) {
+        console.error("XML error:", error);
     }
+}
 
-    const card = clickedButton.closest(".event-card");
-    const eventId = Number(card.getAttribute("data-event-id"));
-    const selectedEvent = events.find((ev) => ev.id === eventId);
-
-    if (selectedEvent && selectedEvent.seats > 0) {
-        selectedEvent.seats -= 1;
-        console.log(`RSVP received for ${selectedEvent.title}. Seats left: ${selectedEvent.seats}`);
-        filterEvents(searchInput.value);
-    }
-});
-
-// B6: Filter on every input change. Escape clears the search field.
-searchInput.addEventListener("input", () => {
-    filterEvents(searchInput.value);
-});
-
-searchInput.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-        searchInput.value = "";
-        filterEvents("");
-        searchInput.blur();
-    }
-});
-
-// B7: Fetch events.json and handle loading, success and error states.
+// Assignment 7 B1-B3: Fetch and process JSON.
 async function loadEvents() {
     eventsStatus.textContent = "Loading events...";
-    eventsStatus.style.fontWeight = "600"; // B3: style property changes presentation.
 
     try {
         const response = await fetch("./events.json");
 
         if (!response.ok) {
-            throw new Error(`Could not load events (HTTP ${response.status}).`);
+            throw new Error(`JSON request failed: ${response.status}`);
         }
 
-        const data = await response.json();
+        const jsonText = await response.text();
+        events = JSON.parse(jsonText);
 
-        if (!Array.isArray(data)) {
-            throw new Error("The event data format is not valid.");
+        if (!Array.isArray(events)) {
+            throw new Error("Event data must be an array.");
         }
 
-        events = data;
         renderEvents(events);
-        eventsStatus.textContent = getEventCountLabel(events);
-        console.log("Events loaded successfully:", events);
-        console.log("Page:", pageTitle, "| Default seat limit:", defaultSeatLimit,
-            "| Board online:", isEventBoardOnline);
-        logEventSummary();
+        filterEvents(searchInput.value);
+
+        console.log("Events loaded:", events);
+        console.log("Page:", pageTitle);
+
+        // B2: First event title and last event seats.
+        if (events.length) {
+            console.log("First event title:", events[0].title);
+            console.log(
+                "Last event seats:",
+                events[events.length - 1].seats
+            );
+        }
+
+        // B3: Convert JavaScript data into a JSON string.
+        console.log(
+            "JSON.stringify() output:",
+            JSON.stringify(events, null, 2)
+        );
+
+        await loadXmlDetails(new Blob([jsonText]).size);
+
     } catch (error) {
-        console.error("Fetch error:", error);
+        console.error("Loading error:", error);
+
         eventsStatus.textContent =
-            "Sorry, events could not be loaded. Please run this project with Live Server or a local web server and try again.";
+            "Events could not be loaded. Please use Live Server.";
+
         eventsStatus.classList.add("error-message");
     }
 }
+// Mobile navigation.
+menuButton.addEventListener("click", () => {
+    navLinks.classList.toggle("nav-open");
 
-// B8: Built-in validation plus one custom setCustomValidity rule.
-const eventNameInput = document.getElementById("event-name");
+    menuButton.setAttribute(
+        "aria-expanded",
+        String(navLinks.classList.contains("nav-open"))
+    );
+});
 
-eventNameInput.addEventListener("input", () => {
-    const cleanedName = eventNameInput.value.trim();
+// RSVP using event delegation.
+eventGrid.addEventListener("click", (event) => {
+    const button = event.target.closest('[data-action="rsvp"]');
 
-    if (cleanedName.length < 2) {
-        eventNameInput.setCustomValidity("Please enter an event name with at least 2 characters.");
-    } else {
-        eventNameInput.setCustomValidity("");
+    if (!button) return;
+
+    const card = button.closest(".event-card");
+
+    const selected = events.find(
+        (ev) => ev.id === Number(card.dataset.eventId)
+    );
+
+    if (selected && selected.seats > 0) {
+        selected.seats--;
+
+        console.log(
+            `RSVP received for ${selected.title}. Seats left: ${selected.seats}`
+        );
+
+        filterEvents(searchInput.value);
     }
 });
 
+// Search events.
+searchInput.addEventListener("input", () => {
+    filterEvents(searchInput.value);
+});
+
+// Escape key clears the search.
+searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        searchInput.value = "";
+        filterEvents();
+        searchInput.blur();
+    }
+});
+
+// Validate event name.
+eventNameInput.addEventListener("input", () => {
+    eventNameInput.setCustomValidity(
+        eventNameInput.value.trim().length < 2
+            ? "Please enter an event name with at least 2 characters."
+            : ""
+    );
+});
+
+// Add a new event for the current session.
 eventForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    // checkValidity() checks required, type=email, minlength and custom validity.
     if (!eventForm.checkValidity()) {
         eventForm.reportValidity();
-        formStatus.textContent = "Please correct the highlighted fields.";
+        formStatus.textContent =
+            "Please correct the highlighted fields.";
         formStatus.classList.add("error-message");
         return;
     }
 
-    const formData = new FormData(eventForm);
+    const data = new FormData(eventForm);
+
     const newEvent = {
         id: Date.now(),
-        title: String(formData.get("event-name")).trim(),
-        date: String(formData.get("event-date")),
+        title: String(data.get("event-name")).trim(),
+        date: String(data.get("event-date")),
         seats: defaultSeatLimit,
+        free: true,
         online: false,
-        description: String(formData.get("event-description")).trim(),
-        location: String(formData.get("event-location")).trim()
+        description: String(data.get("event-description")).trim(),
+        location: String(data.get("event-location")).trim()
     };
 
     events.push(newEvent);
     filterEvents(searchInput.value);
-    formStatus.textContent = `Thank you! "${newEvent.title}" has been added to the event list for this session.`;
+
+    formStatus.textContent =
+        `Thank you! "${newEvent.title}" has been added for this session.`;
+
     formStatus.classList.remove("error-message");
+
     eventForm.reset();
     eventNameInput.setCustomValidity("");
+
     console.log("New event added:", newEvent);
 });
 
-// B9: Helpful initial DevTools message and start the data request.
+// Start the application.
 console.log("Campus Event Board JavaScript is running.");
 loadEvents();
