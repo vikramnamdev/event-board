@@ -416,3 +416,52 @@ footer{
 text-align: right;
 
 }
+
+/* Assignment 6: Search box styling */
+.search-container {
+    margin: 20px 0;
+}
+
+.search-container input {
+    padding: 10px;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 8px;
+}
+
+/* Assignment 6: Navigation menu */
+.nav-open {
+    display: block;
+}
+
+/* Assignment 6: Event status messages */
+#events-status,
+#form-status {
+    margin: 12px 0;
+    font-weight: 700;
+}
+
+/* Assignment 6: Full event */
+.event-card.full {
+    opacity: 0.7;
+    border-left: 4px solid #dc2626;
+}
+
+/* Assignment 6: Few seats available */
+.event-card.few-left {
+    border-left: 4px solid #eab308;
+}
+
+/* Assignment 6: Open event */
+.event-card.open {
+    border-left: 4px solid #16a34a;
+}
+
+.error-message {
+    color: #dc2626;
+}
+
+.empty-message {
+    padding: 15px;
+    text-align: center;
+}
